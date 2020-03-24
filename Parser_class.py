@@ -13,14 +13,13 @@ class Parser:
   def get_html(self):
     req = urllib.request.urlopen(self.url)
     self.raw_html = req.read()
+    self.html = BeautifulSoup(self.raw_html, 'html.parser')
 
   def run(self):
     self.get_html()
 
 # soup = BeautifulSoup(html, 'html.parser')
 # news = soup.find_all('li', class_='liga-news-item')
-
-# results = []
 
 # for item in news:
 #   title = item.find('span', class_='d-block').get_text(strip=True)
