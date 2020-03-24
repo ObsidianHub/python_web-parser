@@ -18,3 +18,10 @@ for item in news:
     'desc': desc,
     'href': href
   })
+
+f = open('news.txt', 'w', encoding='utf-8')
+i = 1
+for item in results:
+  f.write(f'Новость № {i}\n\nНазвание: {item["title"]}\nОписание: {item["desc"]}\nСсылка: {item["href"]}\n\n*******************************\n')
+  i += 1
+f.close()
