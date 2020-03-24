@@ -10,8 +10,12 @@ class Parser:
     self.url = url
     self.path = path
 
-# req = urllib.request.urlopen('https://www.ua-football.com/sport')
-# html = req.read()
+  def get_html(self):
+    req = urllib.request.urlopen(self.url)
+    self.raw_html = req.read()
+
+  def run(self):
+    self.get_html()
 
 # soup = BeautifulSoup(html, 'html.parser')
 # news = soup.find_all('li', class_='liga-news-item')
