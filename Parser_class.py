@@ -15,25 +15,27 @@ class Parser:
     self.raw_html = req.read()
     self.html = BeautifulSoup(self.raw_html, 'html.parser')
 
+  def parsing(self):
+    news = self.html.find_all('li', class_='liga-news-item')
+
+    for item in news:
+      title = item.find('span', class_='d-block').get_text(strip=True)
+      desc = item.find('span', class_='name-dop').get_text(strip=True)
+      href = item.a.get('href')
+      self.results.append({
+        'title': title,
+        'desc': desc,
+        'href': href
+      })
+
+  def save(self):
+    with open(self.path, 'w', encoding='utf-8') as f:
+      i = 1
+      for item in self.results:
+        f.write(f'Новость № {i}\n\nНазвание: {item["title"]}\nОписание: {item["desc"]}\nСсылка: {item["href"]}\n\n*******************************\n')
+        i += 1
+    
   def run(self):
     self.get_html()
-
-# soup = BeautifulSoup(html, 'html.parser')
-# news = soup.find_all('li', class_='liga-news-item')
-
-# for item in news:
-#   title = item.find('span', class_='d-block').get_text(strip=True)
-#   desc = item.find('span', class_='name-dop').get_text(strip=True)
-#   href = item.a.get('href')
-#   results.append({
-#     'title': title,
-#     'desc': desc,
-#     'href': href
-#   })
-
-# f = open('news.txt', 'w', encoding='utf-8')
-# i = 1
-# for item in results:
-#   f.write(f'Новость № {i}\n\nНазвание: {item["title"]}\nОписание: {item["desc"]}\nСсылка: {item["href"]}\n\n*******************************\n')
-#   i += 1
-# f.close()
+    self.parsing()
+    self.save()
